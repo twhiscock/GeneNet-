@@ -1,3 +1,31 @@
+############################################################################################
+GeneNet with Tensorflow [recommended]
+############################################################################################
+
+GeneNetTF.py is a single python script that trains gene circuit models. The example shown is training a 3-node circuit to create a "stripe".
+(See https://www.biorxiv.org/content/biorxiv/early/2017/11/03/213587.full.pdf for further details).
+
+The core elements of GeneNetTF.py can be modified to train different kinds of gene circuits, and for different desired outputs. Specifically:
+    A. To specify the gene circuit model, modify the function "simulate". 
+    B. To specify the design objective of the circuit, modify the function "newBatch".
+
+To train the model, run the function "trainModel" with the following parameters:
+     iterations:     the number of steps to perform in the optimization procedure
+     regularize:     if TRUE, train with L1 regularization
+                     if FALSE, train without L1 regularization [default] 
+     prune:          if TRUE, train with pruning
+                     if FALSE, train without pruning [default] 
+     pruneLimit:     threshold for pruning parameters
+     print:          if TRUE, output the running cost estimate as the algorithm proceeds
+                     if FALSE, do nothing [default]
+                                        
+To run the model, use "simulateModel".
+
+
+############################################################################################
+GeneNet with Theano:
+############################################################################################
+
 To use GeneNet, you must:						(example:)
 (1) specify a model 							(Model.py)
 (2) specify a desired function 					(Model.py)
