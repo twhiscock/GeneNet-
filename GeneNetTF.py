@@ -11,7 +11,7 @@ dt 		= 0.01		#time interval
 L1 		= 0.02 		#L1 regularization parameter
 
 ####################################################################
-##Data 
+##Data
 input_ 		= tf.placeholder(tf.float32, shape=[N, B, S])
 output_ 	= tf.placeholder(tf.float32, shape=[B])
 initial_ 	= tf.placeholder(tf.float32, shape=[B, S])
@@ -42,10 +42,10 @@ output = simulate(input_, initial_, W)
 ## Training function
 relevantOutput 	= A*output[N-1,:,1]
 ## Without regularization
-cost = tf.reduce_mean(tf.square(((relevantOutput - output_)))) 
+cost = tf.reduce_mean(tf.square(((relevantOutput - output_))))
 train_step = tf.train.AdamOptimizer(learning_rate=0.2, beta1=0.98, beta2=0.999, epsilon=1e-08).minimize(cost)
 ## With regularization
-costL1 = tf.reduce_mean(tf.square(((relevantOutput - output_)))) + L1*tf.reduce_mean(tf.abs(W)) 
+costL1 = tf.reduce_mean(tf.square(((relevantOutput - output_)))) + L1*tf.reduce_mean(tf.abs(W))
 train_stepL1 = tf.train.AdamOptimizer(learning_rate=0.2, beta1=0.98, beta2=0.999, epsilon=1e-08).minimize(costL1)
 
 ####################################################################
@@ -66,7 +66,7 @@ def newBatch(plot=False):
 
 ####################################################################
 ## Training model function
-def trainModel(iterations,regularize=False,prune=False,pruneLimit=1,print=False):
+def trainModel(iterations,regularize=False,prune=False,pruneLimit=1,printing=False):
 	mask = np.abs(sess.run(W)) > pruneLimit
 	for i in range(iterations):
 		[inputVal, outputVal, initialVal] = newBatch()
@@ -74,7 +74,7 @@ def trainModel(iterations,regularize=False,prune=False,pruneLimit=1,print=False)
 			sess.run(train_stepL1, feed_dict = {input_: inputVal, initial_: initialVal, output_: outputVal})
 		else:
 			sess.run(train_step, feed_dict = {input_: inputVal, initial_: initialVal, output_: outputVal})
-		if(print):
+		if(printing):
 			ww = sess.run(cost, feed_dict = {input_: inputVal, initial_: initialVal, output_: outputVal})
 			print([ww, i])
 		if(prune):
